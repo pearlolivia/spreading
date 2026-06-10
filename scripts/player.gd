@@ -13,11 +13,11 @@ func _physics_process(_delta):
 	input_dir = Input.get_vector("left", "right", "up", "down")
 	velocity = input_dir.normalized() * SPEED
 	
-	# moves node and detects collision objects
-	move_and_slide()
-	
 	if (is_attacking == true):
 		return
+
+	# moves node and detects collision objects
+	move_and_slide()
 	
 	# animation
 	if (Input.is_action_pressed("attack")):
