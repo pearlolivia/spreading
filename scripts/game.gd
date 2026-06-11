@@ -21,10 +21,7 @@ func _on_spawn_timer_timeout() -> void:
 	var enemy = enemy_scene.instantiate()
 	
 	var enemy_group = $Enemies.get_groups()
-	#if (enemy_group.size() > 0):
-	print(get_tree().get_nodes_in_group('enemies').size())
 	enemy.player = player
-	enemy.name = "Enemy_"
 	add_child(enemy)
 	enemy.position = Vector2(random_x, random_y)
 	$Enemies.add_to_group("enemies")
