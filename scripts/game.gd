@@ -8,6 +8,10 @@ var rng := RandomNumberGenerator.new()
 @onready var enemy_scene = preload("res://scenes/enemy.tscn")
 @onready var spawn_patch_scene = preload("res://scenes/spawn_patch.tscn")
 
+func _ready() -> void:
+	# spawn plants
+	pass
+
 func _process(delta: float) -> void:
 	$Player/HUD/Health/HealthBar.value = player.health
 

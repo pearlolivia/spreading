@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://d3a5hf80x75ey"]
+[gd_scene load_steps=38 format=4 uid="uid://d3a5hf80x75ey"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_s6ldv"]
 [ext_resource type="Texture2D" uid="uid://duunlh35jy3r" path="res://assets/tileset/Tileset Grass Summer.png" id="1_txyq7"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bson4dxgvpdlq" path="res://assets/tileset/Tiny House.png" id="8_md7iu"]
 [ext_resource type="AudioStream" uid="uid://6drq6fjpia5v" path="res://assets/sounds/country_ambiance.mp3" id="9_8bwu6"]
 [ext_resource type="AudioStream" uid="uid://da305qnv1lcoe" path="res://assets/sounds/sword.mp3" id="10_8lwky"]
+[ext_resource type="PackedScene" uid="uid://4ttvpxiee7ov" path="res://scenes/plant.tscn" id="10_fjgol"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y2h45"]
 texture = ExtResource("2_ipwpk")
@@ -4855,6 +4856,11 @@ tile_set = SubResource("TileSet_owjmk")
 z_index = 3
 tile_map_data = PackedByteArray("AAATAAgAAAAFABsAAAA=")
 tile_set = SubResource("TileSet_0op7w")
+
+[node name="Plants" type="Node" parent="."]
+
+[node name="Plant" parent="Plants" instance=ExtResource("10_fjgol")]
+position = Vector2(294, 167)
 
 [node name="SpawnPatches" type="Node" parent="."]
 
