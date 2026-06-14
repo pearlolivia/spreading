@@ -4856,6 +4856,8 @@ z_index = 3
 tile_map_data = PackedByteArray("AAATAAgAAAAFABsAAAA=")
 tile_set = SubResource("TileSet_0op7w")
 
+[node name="SpawnPatches" type="Node" parent="."]
+
 [node name="Player" parent="." instance=ExtResource("2_mnejr")]
 position = Vector2(247, 174)
 
