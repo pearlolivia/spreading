@@ -338,7 +338,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b4rla"]
-size = Vector2(7, 15)
+size = Vector2(10, 16)
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
@@ -346,14 +346,12 @@ collision_mask = 3
 script = ExtResource("1_dupvg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_x37f1")
-animation = &"grow"
-frame = 5
-frame_progress = 1.0
+animation = &"walk_right"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 3.5)
+position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_b4rla")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

@@ -20,8 +20,8 @@ func _on_spawn_timer_timeout() -> void:
 	var random_y = rng.randi_range(spawnerPosition.y - SPAWN_OFFSET, spawnerPosition.y + SPAWN_OFFSET)
 	var enemy = enemy_scene.instantiate()
 	
-	var enemy_group = $Enemies.get_groups()
+	#var enemy_group = $Enemies.get_groups()
 	enemy.player = player
 	add_child(enemy)
 	enemy.position = Vector2(random_x, random_y)
-	$Enemies.add_to_group("enemies")
+	#$Enemies.add_to_group("enemies")

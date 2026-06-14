@@ -4,11 +4,13 @@ const SPEED: int = 20
 const DIRECTIONAL_CHANGE: float = 0.3
 
 var health := 2
-var knockback = 5
+var knockback_strength = 100
+var min_knockback = 1.1
 
 var spawning := true
-var dying := false
+@export var dying := false
 var facingDirection = 'down'
+var knockback : Vector2
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @export var player: CharacterBody2D
@@ -17,6 +19,13 @@ func _ready() -> void:
 	$AnimatedSprite2D.play("grow")
 
 func _physics_process(delta):
+	# move during attack (knockback)
+	if (knockback.length() > min_knockback):
+		knockback /= min_knockback
+		velocity = knockback
+		move_and_slide()
+		return
+		
 	if (player and spawning == false and dying == false):
 		navigation_agent.target_position = player.global_position
 		var direction = global_position.direction_to(navigation_agent.get_next_path_position())
@@ -41,31 +50,32 @@ func _physics_process(delta):
 				$AnimatedSprite2D.flip_h = false
 
 func _on_animation_finished() -> void:
-	if ($AnimatedSprite2D.animation == 'grow'):
-		spawning = false
-	if ('damage' in $AnimatedSprite2D.animation):
-		dying = false
 	if ($AnimatedSprite2D.animation == 'die'):
 		queue_free()
-
+		return
+	
+	if (health <= 0):
+		$AnimatedSprite2D.play("die")
+		return
+		
+	if ($AnimatedSprite2D.animation == 'grow'):
+		spawning = false
+	if ('damage' in $AnimatedSprite2D.animation and health > 0):
+		dying = false
+		
 func take_damage():
 	var new_health = health - 1
 	health = new_health
 	dying = true
-	if (new_health <= 0):
-		if (facingDirection == 'left'):
-			$AnimatedSprite2D.play("damage_right")
-			$AnimatedSprite2D.flip_h = true
-		else:
-			$AnimatedSprite2D.play("damage_" + facingDirection)
-			$AnimatedSprite2D.flip_h = false
-		$AnimatedSprite2D.play('die')
+	
+	# apply knockback
+	knockback = global_position.direction_to(player.global_position) * knockback_strength * -1
+	
+	if (facingDirection == 'left'):
+		$AnimatedSprite2D.play("damage_right")
+		$AnimatedSprite2D.flip_h = true
 	else:
-		self.position = Vector2(self.position.x + knockback, self.position.y + knockback)
-		move_and_slide()
-		if (facingDirection == 'left'):
-			$AnimatedSprite2D.play("damage_right")
-			$AnimatedSprite2D.flip_h = true
-		else:
-			$AnimatedSprite2D.play("damage_" + facingDirection)
-			$AnimatedSprite2D.flip_h = false
+		$AnimatedSprite2D.play("damage_" + facingDirection)
+		$AnimatedSprite2D.flip_h = false
+			
+		
