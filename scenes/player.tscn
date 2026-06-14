@@ -548,13 +548,13 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u54qp"]
-radius = 5.52268
+radius = 4.52769
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ekw6k"]
 radius = 17.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qcntv"]
-radius = 6.5192
+radius = 6.08276
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8pads"]
 animations = [{
@@ -584,7 +584,7 @@ sprite_frames = SubResource("SpriteFrames_7x0h6")
 animation = &"idle_down"
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 0.5)
+position = Vector2(0.5, 1.5)
 shape = SubResource("CircleShape2D_u54qp")
 
 [node name="AttackRange" type="Area2D" parent="."]
@@ -599,7 +599,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="BodyCollider" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0.5, 0.5)
+position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_qcntv")
 
 [node name="HeartsAnimation" type="Node2D" parent="."]

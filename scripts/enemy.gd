@@ -71,14 +71,14 @@ func take_damage():
 	health = new_health
 	dying = true
 	
-	# apply knockback
-	knockback = global_position.direction_to(player.global_position) * knockback_strength * -1
-	
 	if (facingDirection == 'left'):
 		$AnimatedSprite2D.play("damage_right")
 		$AnimatedSprite2D.flip_h = true
 	else:
 		$AnimatedSprite2D.play("damage_" + facingDirection)
 		$AnimatedSprite2D.flip_h = false
-			
+	
+	# apply knockback
+	await get_tree().create_timer(0.1).timeout
+	knockback = global_position.direction_to(player.global_position) * knockback_strength * -1
 		
