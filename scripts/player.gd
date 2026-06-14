@@ -128,6 +128,7 @@ func get_opposite_direction(dir: String):
 	return oppositeDir
 	
 func attack():
+	$"../Sounds/SwordSlash".play()
 	for enemy in attackable_enemies:
 		# check player facing enemy
 		var isCorrectDir = enemy.facingDirection == get_opposite_direction(lastDirection)

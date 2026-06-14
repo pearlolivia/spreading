@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://d3a5hf80x75ey"]
+[gd_scene load_steps=17 format=4 uid="uid://d3a5hf80x75ey"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_s6ldv"]
 [ext_resource type="Texture2D" uid="uid://duunlh35jy3r" path="res://assets/tileset/Tileset Grass Summer.png" id="1_txyq7"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bcuho36nwvraj" path="res://assets/ui/health_bar.png" id="7_q2a86"]
 [ext_resource type="AudioStream" uid="uid://chjq26dt6hoge" path="res://assets/sounds/life_lost.mp3" id="8_7i7rs"]
 [ext_resource type="AudioStream" uid="uid://6drq6fjpia5v" path="res://assets/sounds/country_ambiance.mp3" id="9_8bwu6"]
+[ext_resource type="AudioStream" uid="uid://da305qnv1lcoe" path="res://assets/sounds/sword.mp3" id="10_8lwky"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4lngl"]
 texture = ExtResource("1_txyq7")
@@ -1229,6 +1230,9 @@ stream = ExtResource("8_7i7rs")
 [node name="Overlay" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("9_8bwu6")
 autoplay = true
+
+[node name="SwordSlash" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("10_8lwky")
 
 [connection signal="pause" from="Player" to="." method="_on_player_pause"]
 [connection signal="reset_level" from="Player" to="." method="_on_player_reset_level"]
