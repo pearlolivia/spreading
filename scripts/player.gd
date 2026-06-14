@@ -6,7 +6,7 @@ var lastDirection = 'down'
 
 @export var is_attacking := false
 
-signal attack()
+#signal attack()
 
 func _physics_process(_delta):
 	# keyboard input
@@ -16,6 +16,9 @@ func _physics_process(_delta):
 	if (is_attacking == true):
 		return
 
+	# moves node and detects collision objects
+	move_and_slide()
+	
 	# moves node and detects collision objects
 	move_and_slide()
 	
@@ -59,7 +62,7 @@ func _on_animation_finished() -> void:
 		is_attacking = false
 
 func _on_attack_range_entered(body: Node2D) -> void:
-	print(body.name)
-	if (body.name == 'Enemy'):
-		print(body)
+	#print(body.name)
+	if ('Enemy' in body.name or 'CharacterBody2D' in body.name and is_attacking == true):
+		body.take_damage()
 		
