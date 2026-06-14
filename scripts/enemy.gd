@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED: int = 20
+const SPEED = 20
 const DIRECTIONAL_CHANGE: float = 0.3
 const knockback_strength = 125
 const min_knockback = 1.1
@@ -32,6 +32,7 @@ func _physics_process(delta):
 		velocity = direction * SPEED
 		move_and_slide()
 		
+		self.z_index = 2
 		if (direction.x < -DIRECTIONAL_CHANGE):
 			facingDirection = 'left'
 		elif (direction.x > DIRECTIONAL_CHANGE):
@@ -40,6 +41,7 @@ func _physics_process(delta):
 			facingDirection = 'up'
 		elif (direction.y > DIRECTIONAL_CHANGE):
 			facingDirection = 'down'
+			self.z_index = 0
 		
 		if (spawning == false and dying == false):
 			if (facingDirection == 'left'):

@@ -1,9 +1,14 @@
-[gd_scene load_steps=10 format=4 uid="uid://d3a5hf80x75ey"]
+[gd_scene load_steps=16 format=4 uid="uid://d3a5hf80x75ey"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_s6ldv"]
 [ext_resource type="Texture2D" uid="uid://duunlh35jy3r" path="res://assets/tileset/Tileset Grass Summer.png" id="1_txyq7"]
 [ext_resource type="PackedScene" uid="uid://bor1774mnrai4" path="res://scenes/player.tscn" id="2_mnejr"]
 [ext_resource type="Texture2D" uid="uid://brubump16up0l" path="res://assets/tileset/ALL props seasons.png" id="3_adtdi"]
+[ext_resource type="Texture2D" uid="uid://cpsdvn5bm8dls" path="res://assets/ui/heart-full.png" id="5_3t7aw"]
+[ext_resource type="Script" path="res://scripts/lives.gd" id="5_xoda6"]
+[ext_resource type="Texture2D" uid="uid://bcuho36nwvraj" path="res://assets/ui/health_bar.png" id="7_q2a86"]
+[ext_resource type="AudioStream" uid="uid://chjq26dt6hoge" path="res://assets/sounds/life_lost.mp3" id="8_7i7rs"]
+[ext_resource type="AudioStream" uid="uid://6drq6fjpia5v" path="res://assets/sounds/country_ambiance.mp3" id="9_8bwu6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4lngl"]
 texture = ExtResource("1_txyq7")
@@ -1103,6 +1108,9 @@ texture = ExtResource("3_adtdi")
 [sub_resource type="TileSet" id="TileSet_aagbf"]
 sources/0 = SubResource("TileSetAtlasSource_7lcxx")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0bxhr"]
+bg_color = Color(0.921569, 0.14902, 0.180392, 1)
+
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_uf647"]
 vertices = PackedVector2Array(497, 337, 1, 337, 1, 1, 497, 1)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
@@ -1126,17 +1134,102 @@ position = Vector2(247, 174)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2.5, 2.5)
 
+[node name="HUD" type="Control" parent="Player"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -247.0
+offset_top = -174.0
+offset_right = -207.0
+offset_bottom = -134.0
+script = ExtResource("5_xoda6")
+
+[node name="Lives" type="VBoxContainer" parent="Player/HUD"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 52.0
+offset_right = 36.0
+offset_bottom = 83.0
+theme_override_constants/separation = 10
+
+[node name="HeartContainer" type="ReferenceRect" parent="Player/HUD/Lives"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+border_color = Color(1, 0, 0, 0.647059)
+
+[node name="Heart1" type="Sprite2D" parent="Player/HUD/Lives/HeartContainer"]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("5_3t7aw")
+
+[node name="HeartContainer2" type="ReferenceRect" parent="Player/HUD/Lives"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+border_color = Color(1, 0, 0, 0.647059)
+
+[node name="Heart2" type="Sprite2D" parent="Player/HUD/Lives/HeartContainer2"]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("5_3t7aw")
+
+[node name="HeartContainer3" type="ReferenceRect" parent="Player/HUD/Lives"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+border_color = Color(1, 0, 0, 0.647059)
+
+[node name="Heart3" type="Sprite2D" parent="Player/HUD/Lives/HeartContainer3"]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("5_3t7aw")
+
+[node name="Health" type="ColorRect" parent="Player/HUD"]
+layout_mode = 0
+offset_left = 457.0
+offset_top = 253.0
+offset_right = 462.0
+offset_bottom = 295.0
+color = Color(0.2, 0.0745098, 0.117647, 1)
+
+[node name="HealthBar" type="ProgressBar" parent="Player/HUD/Health"]
+layout_mode = 2
+offset_top = 11.0
+offset_right = 4.0
+offset_bottom = 42.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_0bxhr")
+max_value = 10.0
+step = 1.0
+value = 8.0
+fill_mode = 3
+show_percentage = false
+
+[node name="HealthUI" type="Sprite2D" parent="Player/HUD/Health"]
+position = Vector2(2.50002, 21.5)
+scale = Vector2(0.812502, 1.0625)
+texture = ExtResource("7_q2a86")
+
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 position = Vector2(-1, -1)
 navigation_polygon = SubResource("NavigationPolygon_uf647")
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="Spawner" type="Marker2D" parent="Enemies"]
+[node name="EnemyControls" type="Node" parent="."]
+
+[node name="Spawner" type="Marker2D" parent="EnemyControls"]
 position = Vector2(250, 178)
 
-[node name="SpawnTimer" type="Timer" parent="Enemies"]
+[node name="SpawnTimer" type="Timer" parent="EnemyControls"]
 wait_time = 5.0
 autostart = true
 
-[connection signal="timeout" from="Enemies/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[node name="Sounds" type="Node" parent="."]
+
+[node name="LifeLost" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_7i7rs")
+
+[node name="Overlay" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_8bwu6")
+autoplay = true
+
+[connection signal="pause" from="Player" to="." method="_on_player_pause"]
+[connection signal="reset_level" from="Player" to="." method="_on_player_reset_level"]
+[connection signal="timeout" from="EnemyControls/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
