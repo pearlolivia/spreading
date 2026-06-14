@@ -2,15 +2,15 @@ extends CharacterBody2D
 
 const SPEED: int = 20
 const DIRECTIONAL_CHANGE: float = 0.3
+const knockback_strength = 125
+const min_knockback = 1.1
+
+var knockback : Vector2
 
 var health := 2
-var knockback_strength = 100
-var min_knockback = 1.1
-
 var spawning := true
 @export var dying := false
-var facingDirection = 'down'
-var knockback : Vector2
+@export var facingDirection = 'down'
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @export var player: CharacterBody2D
