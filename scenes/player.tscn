@@ -423,7 +423,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"sword_down",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -449,7 +449,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"sword_right",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -475,7 +475,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"sword_up",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -574,14 +574,14 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
-z_index = 1
+z_index = 4
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_r3h7q")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7x0h6")
-animation = &"idle_down"
+animation = &"sword_up"
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 1.5)

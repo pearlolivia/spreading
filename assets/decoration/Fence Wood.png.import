@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brubump16up0l"
-path="res://.godot/imported/ALL props seasons.png-69d6dcf435723696a18045d6d16e3952.ctex"
+uid="uid://v8wc06yoac0v"
+path="res://.godot/imported/Fence Wood.png-8bae4ff714d1b333110325290295dfce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tileset/ALL props seasons.png"
-dest_files=["res://.godot/imported/ALL props seasons.png-69d6dcf435723696a18045d6d16e3952.ctex"]
+source_file="res://assets/decoration/Fence Wood.png"
+dest_files=["res://.godot/imported/Fence Wood.png-8bae4ff714d1b333110325290295dfce.ctex"]
 
 [params]
 

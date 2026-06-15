@@ -1,35 +1,58 @@
 extends Node2D
 
 const SPAWN_OFFSET = 150
+const SPAWN_RATE =  0.8
+var enemy_timeout = 5 #seconds
 var rng := RandomNumberGenerator.new()
 
 @onready var player: CharacterBody2D = $Player
 @onready var player_spawn_point = $EnemyControls/Spawner
+@onready var navigation_agent = $NavigationRegion2D
+@onready var plant_nav_agent = $Plants/PlantNavRegion
+@onready var enemy_spawn_timer = $EnemyControls/SpawnTimer
+@onready var wave_timer = $Player/HUD/Wave/WaveTimer
+
 @onready var enemy_scene = preload("res://scenes/enemy.tscn")
 @onready var spawn_patch_scene = preload("res://scenes/spawn_patch.tscn")
+@onready var plant_scene = preload("res://scenes/plant.tscn")
+
+var plants: Array # textures
+var _plant_dir := DirAccess.open("res://assets/plants/")
 
 func _ready() -> void:
+	enemy_spawn_timer.wait_time = enemy_timeout
 	# spawn plants
-	pass
+	for _file: String in _plant_dir.get_files():
+		if (_file.get_extension() == "png"):
+			plants.push_back("res://assets/plants/" + _file)
+	
+	await get_tree().create_timer(0.2).timeout
+	for i in range(35):
+		var plant = plant_scene.instantiate()
+		var spawnerPosition = NavigationServer2D.region_get_random_point(plant_nav_agent.get_rid(), 1, false)
+		var plant_idx = rng.randi_range(0, plants.size() - 1)
+
+		var texture = load(plants[plant_idx])
+		$Plants.add_child(plant)
+		plant.get_child(0).texture = texture
+		plant.position = Vector2(spawnerPosition.x, spawnerPosition.y)
 
 func _process(delta: float) -> void:
 	$Player/HUD/Health/HealthBar.value = player.health
 
 func _on_spawn_timer_timeout() -> void:
 	#spawn enemies
-	var spawnerPosition = $EnemyControls/Spawner.position
-	var random_x = rng.randi_range(spawnerPosition.x - SPAWN_OFFSET, spawnerPosition.x + SPAWN_OFFSET)
-	var random_y = rng.randi_range(spawnerPosition.y - SPAWN_OFFSET, spawnerPosition.y + SPAWN_OFFSET)
+	var spawnerPosition = NavigationServer2D.region_get_random_point(navigation_agent.get_rid(), 1, false)
 	var enemy = enemy_scene.instantiate()
 	var patch = spawn_patch_scene.instantiate()
 	
 	enemy.player = player
 	$Enemies.add_child(enemy)
-	enemy.position = Vector2(random_x, random_y)
+	enemy.position = Vector2(spawnerPosition.x, spawnerPosition.y)
 	
 	await get_tree().create_timer(0.5).timeout
-	$SpawnPatches.add_child(patch)
-	patch.position = Vector2(random_x, random_y + 8)
+	$Map/SpawnPatches.add_child(patch)
+	patch.position = Vector2(spawnerPosition.x, spawnerPosition.y + 8)
 
 func delete_enemies():
 	for enemy in $Enemies.get_children():
@@ -39,8 +62,14 @@ func _on_player_reset_level() -> void:
 	# remove enemies, reset player spawn point & restart enemy spawn timer
 	delete_enemies()
 	player.global_position = player_spawn_point.global_position
-	$EnemyControls/SpawnTimer.wait_time = 5
-	$EnemyControls/SpawnTimer.start()
+	#enemy_spawn_timer.wait_time = 5
+	wave_timer.start(Global.WAVE_TIME)
+	enemy_spawn_timer.start()
 
 func _on_player_pause() -> void:
-	$EnemyControls/SpawnTimer.stop()
+	enemy_spawn_timer.stop()
+
+func _on_wave_timer_timeout() -> void:
+	# increase enemy spawn rate
+	enemy_timeout = enemy_timeout * SPAWN_RATE
+	enemy_spawn_timer.wait_time = enemy_timeout

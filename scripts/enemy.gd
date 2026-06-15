@@ -28,7 +28,8 @@ func _physics_process(delta):
 		
 	if (player and spawning == false and dying == false):
 		navigation_agent.target_position = player.global_position
-		var direction = global_position.direction_to(navigation_agent.get_next_path_position())
+		#var direction = global_position.direction_to(navigation_agent.get_next_path_position())
+		var direction = global_position.direction_to(navigation_agent.get_final_position())
 		velocity = direction * SPEED
 		move_and_slide()
 		

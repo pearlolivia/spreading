@@ -356,5 +356,6 @@ position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_b4rla")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]
