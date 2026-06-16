@@ -1,6 +1,6 @@
 extends Node
 
-@export var LIVES := 1
+@export var LIVES := 3
 @export var SCORE := 0
 @export var SLIMES_KILLED := 0
 @export var PLANTS_DESTROYED := 0

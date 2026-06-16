@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="spreading"
+config/name="Bloom Doom"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://assets/plants/flower_08.png"
 
 [autoload]
 
