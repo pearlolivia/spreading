@@ -137,7 +137,7 @@ func attack():
 
 func _on_hitbox_entered(body: Node2D) -> void:
 	# take damage
-	if (('Enemy' in body.name or 'CharacterBody2D' in body.name) and is_dead == false):
+	if (('Enemy' in body.name or 'CharacterBody2D' in body.name) and is_dead == false and body.dying == false):
 		Global.SCORE -= 2
 		health -= 1
 		dying = true

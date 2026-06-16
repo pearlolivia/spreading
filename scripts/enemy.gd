@@ -55,6 +55,7 @@ func _physics_process(delta):
 func _on_animation_finished() -> void:
 	if ($AnimatedSprite2D.animation == 'die'):
 		Global.SCORE += 10
+		Global.SLIMES_KILLED += 1
 		queue_free()
 		return
 	

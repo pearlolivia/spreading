@@ -7,4 +7,5 @@ top_level = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
+texture_filter = 1
 texture = ExtResource("1_qaary")
