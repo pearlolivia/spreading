@@ -28,7 +28,7 @@ func _ready() -> void:
 			plant_files.push_back("res://assets/plants/" + _file)
 	
 	await get_tree().create_timer(0.2).timeout
-	for i in range(25):
+	for i in range(Global.TOTAL_PLANTS):
 		var plant = plant_scene.instantiate()
 		var spawnerPosition = NavigationServer2D.region_get_random_point(plant_nav_agent.get_rid(), 1, false)
 		var plant_idx = rng.randi_range(0, plant_files.size() - 1)

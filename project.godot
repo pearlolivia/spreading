@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Global="*res://scripts/Global.gd"
 
+[gui]
+
+theme/custom_font="res://assets/Game-Font.ttf"
+
 [input]
 
 up={

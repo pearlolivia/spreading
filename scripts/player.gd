@@ -93,6 +93,13 @@ func _on_animation_finished() -> void:
 		return
 		
 	if ($AnimatedSprite2D.animation == "dead"):
+		# END GAME
+		if (Global.LIVES == 1):
+			Global.LIVES -= 1
+			await get_tree().create_timer(1).timeout
+			get_tree().change_scene_to_file("res://scenes/game_over.tscn")
+			return
+		
 		# LOSE A LIFE & reset stats
 		Global.LIVES -= 1
 		await get_tree().create_timer(1).timeout
