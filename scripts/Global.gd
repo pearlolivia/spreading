@@ -4,6 +4,6 @@ extends Node
 @export var SCORE := 0
 @export var SLIMES_KILLED := 0
 @export var PLANTS_DESTROYED := 0
-@export var TOTAL_PLANTS := 25
+@export var TOTAL_PLANTS := 28
 @export var WAVE := 1
 @export var WAVE_TIME := 30 # seconds

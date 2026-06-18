@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://digjoaonb3k6x"]
+[gd_scene load_steps=24 format=4 uid="uid://digjoaonb3k6x"]
 
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_e2ifu"]
 [ext_resource type="Texture2D" uid="uid://csrkd2awq254k" path="res://assets/tileset/Water tile.png" id="2_kqea7"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dl38bjqt1j7d6" path="res://assets/trees/Orange Tree.png" id="5_ksb7w"]
 [ext_resource type="Texture2D" uid="uid://hkd5r8sbp7e" path="res://assets/trees/Maple Tree.png" id="6_jcenb"]
 [ext_resource type="Texture2D" uid="uid://cpsdvn5bm8dls" path="res://assets/ui/heart-full.png" id="7_6ww1u"]
-[ext_resource type="Texture2D" uid="uid://dbgd8g6isgi0c" path="res://assets/enemy/sprout.png.png" id="8_g54qw"]
+[ext_resource type="Texture2D" uid="uid://nhflw4274u88" path="res://assets/enemy/Walk.png" id="8_uw62g"]
 [ext_resource type="Texture2D" uid="uid://cxthlivesddxr" path="res://assets/plants/flower_02.png" id="9_08jw2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bld7x"]
@@ -509,6 +509,42 @@ texture = ExtResource("6_jcenb")
 sources/0 = SubResource("TileSetAtlasSource_7h873")
 sources/1 = SubResource("TileSetAtlasSource_w8eh0")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvx8t"]
+atlas = ExtResource("8_uw62g")
+region = Rect2(0, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osut4"]
+atlas = ExtResource("8_uw62g")
+region = Rect2(16, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ljpyq"]
+atlas = ExtResource("8_uw62g")
+region = Rect2(32, 64, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipb61"]
+atlas = ExtResource("8_uw62g")
+region = Rect2(48, 64, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aqw5m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvx8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osut4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ljpyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ipb61")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
 [node name="GameOver" type="Node2D"]
 script = ExtResource("1_e2ifu")
 
@@ -647,11 +683,13 @@ offset_top = 9.0
 offset_right = 40.0
 offset_bottom = 114.0
 
-[node name="Sprite2D" type="Sprite2D" parent="Control/ScoreCard"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Control/ScoreCard"]
 texture_filter = 1
 position = Vector2(1051, 141)
 scale = Vector2(3, 3)
-texture = ExtResource("8_g54qw")
+sprite_frames = SubResource("SpriteFrames_aqw5m")
+autoplay = "default"
+frame_progress = 0.252302
 
 [node name="Slimes" type="Label" parent="Control/ScoreCard"]
 texture_filter = 1
@@ -667,6 +705,7 @@ text = "99"
 
 [node name="Label2" type="Label" parent="Control/ScoreCard"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 1086.0
 offset_top = 146.0
 offset_right = 1124.0
@@ -704,6 +743,7 @@ text = "23/25"
 
 [node name="Label2" type="Label" parent="Control/ScoreCard2"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 1086.0
 offset_top = 146.0
 offset_right = 1124.0

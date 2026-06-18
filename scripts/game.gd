@@ -12,6 +12,7 @@ var rng := RandomNumberGenerator.new()
 @onready var enemy_spawn_timer = $EnemyControls/SpawnTimer
 @onready var wave_timer = $Player/HUD/Wave/WaveTimer
 @onready var plants = $Plants
+@onready var score = $Player/HUD/Score/HBoxContainer/Score
 
 @onready var enemy_scene = preload("res://scenes/enemy.tscn")
 @onready var spawn_patch_scene = preload("res://scenes/spawn_patch.tscn")
@@ -20,19 +21,21 @@ var rng := RandomNumberGenerator.new()
 var plant_files: Array # textures
 var _plant_dir := DirAccess.open("res://assets/plants/")
 
+func _init():
+	# get plant sprites
+	for _file: String in _plant_dir.get_files():
+		if (_file.get_extension() == "png" or _file.get_extension() == 'import'):
+			plant_files.push_back("res://assets/plants/" + _file.replace('.import', ''))
+			
 func _ready() -> void:
 	enemy_spawn_timer.wait_time = enemy_timeout
-	# spawn plants
-	for _file: String in _plant_dir.get_files():
-		if (_file.get_extension() == "png"):
-			plant_files.push_back("res://assets/plants/" + _file)
 	
+	# spawn plants
 	await get_tree().create_timer(0.2).timeout
 	for i in range(Global.TOTAL_PLANTS):
 		var plant = plant_scene.instantiate()
 		var spawnerPosition = NavigationServer2D.region_get_random_point(plant_nav_agent.get_rid(), 1, false)
 		var plant_idx = rng.randi_range(0, plant_files.size() - 1)
-
 		var texture = load(plant_files[plant_idx])
 		$Plants.add_child(plant)
 		plant.get_child(0).texture = texture
@@ -40,6 +43,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	$Player/HUD/Health/HealthBar.value = player.health
+	score.text = str(Global.SCORE)
 
 func _on_spawn_timer_timeout() -> void:
 	#spawn enemies
