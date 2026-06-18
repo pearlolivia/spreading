@@ -13,6 +13,7 @@ var rng := RandomNumberGenerator.new()
 @onready var wave_timer = $Player/HUD/Wave/WaveTimer
 @onready var plants = $Plants
 @onready var score = $Player/HUD/Score/HBoxContainer/Score
+@onready var spawn_sound = $Sounds/EnemySpawn
 
 @onready var enemy_scene = preload("res://scenes/enemy.tscn")
 @onready var spawn_patch_scene = preload("res://scenes/spawn_patch.tscn")
@@ -54,6 +55,7 @@ func _on_spawn_timer_timeout() -> void:
 	enemy.player = player
 	$Enemies.add_child(enemy)
 	enemy.position = Vector2(spawnerPosition.x, spawnerPosition.y)
+	spawn_sound.play()
 	
 	# if spawns near plant - destroy plant
 	var plant_scenes = plants.get_children()

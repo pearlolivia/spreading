@@ -11,9 +11,9 @@ var health := 2
 var spawning := true
 @export var dying := false
 @export var facingDirection = 'down'
+@export var player: CharacterBody2D
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
-@export var player: CharacterBody2D
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("grow")
