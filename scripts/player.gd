@@ -5,6 +5,7 @@ const MAX_HEALTH = 10
 const knockback_strength = 175
 const min_knockback = 1.1
 
+var is_dead
 var input_dir: Vector2
 var attackable_enemies: Array = []
 var knockback: Vector2
@@ -15,7 +16,7 @@ var dying := false
 @export var is_attacking := false
 @export var health = MAX_HEALTH
 
-var is_dead
+@onready var AttackTimer = $AttackTimer
 
 signal pause()
 signal reset_level()
@@ -45,6 +46,7 @@ func _physics_process(_delta):
 		
 	# prevent movement whilst attacking
 	if (is_attacking == true):
+		damage_enemies()
 		return
 		
 	# moves node and detects collision objects
@@ -52,12 +54,13 @@ func _physics_process(_delta):
 	
 	# animations
 	if (Input.is_action_pressed("attack") and is_attacking == false):
-		is_attacking = true
 		attack()
 		if (lastDirection == 'left'):
+			$AnimatedSprite2D.stop()
 			$AnimatedSprite2D.play("sword_right")
 			$AnimatedSprite2D.flip_h = true
 		else:
+			$AnimatedSprite2D.stop()
 			$AnimatedSprite2D.play("sword_" + lastDirection)
 			$AnimatedSprite2D.flip_h = false
 	elif (Input.is_action_pressed("down")):
@@ -135,12 +138,8 @@ func get_opposite_direction(dir: String):
 	return oppositeDir
 	
 func attack():
+	is_attacking = true
 	$"../Sounds/SwordSlash".play()
-	for enemy in attackable_enemies:
-		# check player facing enemy
-		var isCorrectDir = enemy.facingDirection == get_opposite_direction(lastDirection)
-		if (enemy.dying == false and isCorrectDir == true):
-			enemy.take_damage()
 
 func _on_hitbox_entered(body: Node2D) -> void:
 	# take damage
@@ -168,3 +167,10 @@ func reset_player():
 	$HeartsAnimation/LifeLost.visible = false
 	$AnimatedSprite2D.play("idle_down")
 	reset_level.emit()
+
+func damage_enemies():
+	for enemy in attackable_enemies:
+		# check player facing enemy & enemy not currently being attacked
+		var isCorrectDir = enemy.facingDirection == get_opposite_direction(lastDirection)
+		if (enemy.dying == false and isCorrectDir == true):
+			enemy.take_damage()
